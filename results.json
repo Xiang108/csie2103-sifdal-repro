@@ -1,0 +1,11 @@
+{
+  "paper": "SIFDAL (IEEE TGRS 2025)",
+  "dataset": "State-Air sample (7 images)",
+  "epochs": 8,
+  "device": "CUDA (GPU idle auto-selected)",
+  "train_loss_epoch8": 6.606,
+  "val_loss_epoch8": 6.537,
+  "mAP_val": "0.00%",
+  "weights": "reproduction/sifdal/SIFAD/logs/best_epoch_weights.pth",
+  "note": "小樣本、短訓練；驗證官方 SIFAD 訓練流程可執行"
+}
