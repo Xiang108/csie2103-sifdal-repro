@@ -146,6 +146,8 @@ def parse_results() -> dict:
 
 
 def main():
+    subprocess.check_call([sys.executable, str(ROOT / "scripts" / "download_visdrone.py")])
+    subprocess.check_call([sys.executable, str(ROOT / "scripts" / "visdrone_to_voc.py")])
     REPRO.mkdir(parents=True, exist_ok=True)
     (REPRO / "outputs").mkdir(parents=True, exist_ok=True)
 

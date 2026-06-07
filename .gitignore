@@ -6,5 +6,11 @@ __pycache__/
 *.ckpt
 events.out.tfevents.*
 datasets/
+esod/runs/
+esod/VisDrone/
+esod/weights/pretrained/*.pt
+remdet/work_dirs/
 sifdal/SIFAD/VOCdevkit/
 sifdal/SIFAD/logs/
+outputs/visdrone_train/model_*.pth
+outputs/visdrone_train/last_checkpoint
