@@ -1,49 +1,73 @@
-# CSIE2103 重現紀錄：SIFDAL
+# CSIE2103 重現：SIFDAL
 
 學號：**M11417015**　姓名：**謝宇翔**  
 課程：CSIE 2103 類神經網路｜Spring 2026
 
-## 論文
-
 **Boost UAV-based Object Detection via Scale-Invariant Feature Disentanglement and Adversarial Learning**（IEEE TGRS 2025）  
-官方程式：https://github.com/1e12Leon/SIFDAL
+官方：https://github.com/1e12Leon/SIFDAL
 
-## 本 repo 內容
+---
 
-本 repo 為**期末作業重現結果紀錄**，包含：
+## 快速開始
 
-| 檔案 | 說明 |
+### 1. 環境
+
+```bash
+git clone https://github.com/Xiang108/csie2103-sifdal-repro.git
+cd csie2103-sifdal-repro
+
+python3 -m venv .venv && source .venv/bin/activate
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
+pip install matplotlib pillow tqdm tensorboard
+```
+
+### 2. 資料集 → VOC
+
+下載 VisDrone2019-DET 至 `datasets/VisDrone-DET/`，執行轉換：
+
+```bash
+python3 scripts/visdrone_to_voc.py
+```
+
+會產生 `sifdal/SIFAD/VOCdevkit/` 與 `2007_train.txt`、`2007_val.txt`（train 6471 / val 548）。
+
+### 3. 訓練
+
+```bash
+python3 scripts/run_train.py
+```
+
+| 變數 | 預設 | 說明 |
+|------|------|------|
+| `SIFDAL_GPU` | 1 | GPU 編號 |
+| `SIFDAL_EPOCHS` | 300 | epoch |
+| `SIFDAL_FREEZE_ALL` | 1 | 1=全程凍結 backbone |
+| `DATA_ROOT` | `./datasets/VisDrone-DET` | 原始資料 |
+
+### 4. 輸出
+
+| 路徑 | 內容 |
 |------|------|
-| [`results.json`](results.json) | 重現數值摘要（訓練完成後更新） |
-| [`outputs/train_300e.log`](outputs/train_300e.log) | 訓練 log |
+| `sifdal/SIFAD/logs/` | loss、mAP 紀錄 |
+| `results.json` | 最佳 / 最終 mAP |
+| `figures/` | 訓練完成後產生 |
+| `outputs/train_300e.log` | 訓練 log |
 
-> 模型權重體積過大，未上傳至此 repo。訓練完成後將補上 `figures/`。
+---
 
-## 重現設定
+## 目錄結構
 
-| 項目 | 設定 |
-|------|------|
-| 框架 | PyTorch YOLOv7 + SIFAD（SIFDAL 官方實作） |
-| 資料集 | VisDrone2019-DET（train 6471 / val 548，VOC 格式） |
-| 訓練 | 300 epoch，`FREEZE_ALL=1` 全程凍結 backbone |
-| 環境 | Python 3.12、PyTorch 2.12+cu128、GPU |
+```
+├── sifdal/SIFAD/      # SIFDAL 官方程式（含 patch）
+├── scripts/
+│   ├── visdrone_to_voc.py
+│   ├── run_train.py
+│   └── plot_figures.py
+├── device_utils.py
+├── results.json
+└── outputs/
+```
 
 ## 重現狀態
 
-| 項目 | 狀態 |
-|------|------|
-| 訓練 | 🔄 300 epoch 重訓進行中 |
-| 舊 run | epoch 50 解凍後 mAP 崩潰，結果不可直接對照論文 |
-
-## 如何重現（參考官方 repo）
-
-```bash
-git clone https://github.com/1e12Leon/SIFDAL.git
-cd SIFDAL
-# 依官方 README 安裝環境、準備 VisDrone VOC 資料並訓練
-```
-
-## 差距原因與改善方向
-
-- **可能原因**：舊版解凍策略導致 mAP 崩潰；改以全程凍結 backbone 重訓
-- **改善方向**：對齊論文解凍時程與作者預訓練權重；訓練完成後更新本 repo 的 `results.json` 與 figures
+300 epoch 重訓進行中（`FREEZE_ALL=1`）。舊 run 解凍後 mAP 崩潰，改以全程凍結 backbone 重訓。

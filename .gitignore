@@ -3,5 +3,8 @@ __pycache__/
 .DS_Store
 *.pth
 *.pt
-*.weights
-logs/
+*.ckpt
+events.out.tfevents.*
+datasets/
+sifdal/SIFAD/VOCdevkit/
+sifdal/SIFAD/logs/
