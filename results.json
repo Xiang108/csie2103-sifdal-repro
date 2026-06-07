@@ -1,11 +1,25 @@
 {
   "paper": "SIFDAL (IEEE TGRS 2025)",
-  "dataset": "State-Air sample (7 images)",
-  "epochs": 8,
-  "device": "CUDA (GPU idle auto-selected)",
-  "train_loss_epoch8": 6.606,
-  "val_loss_epoch8": 6.537,
-  "mAP_val": "0.00%",
-  "weights": "reproduction/sifdal/SIFAD/logs/best_epoch_weights.pth",
-  "note": "小樣本、短訓練；驗證官方 SIFAD 訓練流程可執行"
+  "dataset": "VisDrone2019-DET full train 6471 + val 548 (VOC)",
+  "epochs": 300,
+  "epochs_completed": false,
+  "device": "cuda:1",
+  "log_dir": "reproduction/sifdal/SIFAD/logs",
+  "metrics": {
+    "best_mAP": null,
+    "final_mAP": null,
+    "map_history": []
+  },
+  "figures_dir": "reproduction/csie2103-sifdal-repro/figures",
+  "status": "training",
+  "freeze_all": true,
+  "collapse_detected": false,
+  "note": "舊 300e 解凍崩潰；2026-06-07 起 FREEZE_ALL=1 重訓中",
+  "log": "reproduction/csie2103-sifdal-repro/outputs/train_300e.log",
+  "previous_run": {
+    "status": "collapsed",
+    "best_mAP": 0.4258,
+    "final_mAP": 0.2524,
+    "note": "epoch 50 解凍後 mAP 崩潰"
+  }
 }
